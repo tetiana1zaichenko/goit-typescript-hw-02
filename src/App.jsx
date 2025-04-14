@@ -12,6 +12,8 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,10 +35,16 @@ const App = () => {
     if (!searchQuery.trim()) return;
     const getData = async () => {
       try {
+        setIsLoading(true);
+        true;
         const data = await fetchHits(query, page, abortController.signal);
         setData((prev) => [...prev, ...data]);
+        setTotalPages(data.total_pages);
+        0;
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getData();
@@ -53,7 +61,8 @@ const App = () => {
       />
       {data.length === 0 && searchQuery && <ErrorMessage />}
       <ImageGallery data={data} />
-      <LoadMoreBtn onClick={handleChangePage} />
+      {isLoading && <h2>Loading</h2>}
+      {page < totalPages && <LoadMoreBtn onClick={handleChangePage} />}
     </div>
   );
 };
