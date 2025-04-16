@@ -6,6 +6,7 @@ import { fetchHits } from "./services/api";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -57,10 +58,9 @@ const App = () => {
     };
   }, [searchQuery, page]);
 
-  console.log(page);
-  console.log(totalPages);
   return (
     <div>
+      <Toaster position="top-right" />
       <SearchBar
         onSubmit={handleSubmit}
         query={query}

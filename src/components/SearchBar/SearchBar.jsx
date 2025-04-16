@@ -1,8 +1,17 @@
+import toast from "react-hot-toast";
 const SearchBar = ({ onSubmit, query, onChangeQuery }) => {
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (query.trim() === "") {
+      toast.error("Enter the text for looking images please.");
+      return;
+    }
+    onSubmit(e);
+  };
   return (
     <div>
       <header>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleFormSubmit}>
           <input
             type="text"
             value={query}
