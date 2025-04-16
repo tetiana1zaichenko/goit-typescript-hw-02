@@ -37,9 +37,13 @@ const App = () => {
       try {
         setIsLoading(true);
         true;
-        const data = await fetchHits(query, page, abortController.signal);
-        setData((prev) => [...prev, ...data]);
-        setTotalPages(data.total_pages);
+        const result = await fetchHits(
+          searchQuery,
+          page,
+          abortController.signal
+        );
+        setData((prev) => [...prev, ...result.results]);
+        setTotalPages(result.total_pages);
         0;
       } catch (error) {
         console.log(error);
@@ -52,6 +56,9 @@ const App = () => {
       abortController.abort();
     };
   }, [searchQuery, page]);
+
+  console.log(page);
+  console.log(totalPages);
   return (
     <div>
       <SearchBar
