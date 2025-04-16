@@ -15,6 +15,7 @@ const App = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
+  const [isError, setIsError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,7 +38,7 @@ const App = () => {
     const getData = async () => {
       try {
         setIsLoading(true);
-        true;
+        setIsError(false);
         const result = await fetchHits(
           searchQuery,
           page,
@@ -45,9 +46,11 @@ const App = () => {
         );
         setData((prev) => [...prev, ...result.results]);
         setTotalPages(result.total_pages);
-        0;
       } catch (error) {
         console.log(error);
+        if (error.code !== "ERR_CANCELED") {
+          setIsError(true);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -66,9 +69,10 @@ const App = () => {
         query={query}
         onChangeQuery={handleChangeQuery}
       />
-      {data.length === 0 && searchQuery && <ErrorMessage />}
+      {/* {data.length === 0 && searchQuery && <ErrorMessage />} */}
       <ImageGallery data={data} />
       {isLoading && <h2>Loading</h2>}
+      {isError && <ErrorMessage />}
       {page < totalPages && !isLoading && (
         <LoadMoreBtn onClick={handleChangePage} />
       )}
