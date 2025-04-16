@@ -69,7 +69,9 @@ const App = () => {
       {data.length === 0 && searchQuery && <ErrorMessage />}
       <ImageGallery data={data} />
       {isLoading && <h2>Loading</h2>}
-      {page < totalPages && <LoadMoreBtn onClick={handleChangePage} />}
+      {page < totalPages && !isLoading && (
+        <LoadMoreBtn onClick={handleChangePage} />
+      )}
     </div>
   );
 };
