@@ -85,7 +85,7 @@ const App = () => {
         query={query}
         onChangeQuery={handleChangeQuery}
       />
-      {/* {data.length === 0 && searchQuery && <ErrorMessage />} */}
+      {data.length === 0 && searchQuery && <ErrorMessage />}
       <ImageGallery data={data} openModal={openModal} />
       {isLoading && <h2>Loading</h2>}
       {isError && <ErrorMessage />}

@@ -8,6 +8,9 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
   },
+  overlay: {
+    background: "rgb(0, 0, 0, 0.6)",
+  },
 };
 Modal.setAppElement("#root");
 export const ImageModal = ({ modalIsOpen, closeModal, src, alt }) => {
