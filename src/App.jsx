@@ -7,6 +7,7 @@ import ImageGallery from "./components/ImageGallery/ImageGallery";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import { Toaster } from "react-hot-toast";
+import ImageModal from "./components/ImageModal/ImageModal";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -16,6 +17,9 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [isError, setIsError] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalSrc, setModalSrc] = useState("");
+  const [modalAlt, setModalAlt] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,6 +65,18 @@ const App = () => {
     };
   }, [searchQuery, page]);
 
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setModalSrc("");
+    setModalAlt("");
+  };
+
+  const openModal = (src, alt) => {
+    setModalIsOpen(true);
+    setModalSrc(src);
+    setModalAlt(alt);
+  };
+
   return (
     <div>
       <Toaster position="top-right" />
@@ -70,12 +86,18 @@ const App = () => {
         onChangeQuery={handleChangeQuery}
       />
       {/* {data.length === 0 && searchQuery && <ErrorMessage />} */}
-      <ImageGallery data={data} />
+      <ImageGallery data={data} openModal={openModal} />
       {isLoading && <h2>Loading</h2>}
       {isError && <ErrorMessage />}
       {page < totalPages && !isLoading && (
         <LoadMoreBtn onClick={handleChangePage} />
       )}
+      <ImageModal
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+        src={modalSrc}
+        alt={modalAlt}
+      />
     </div>
   );
 };
