@@ -1,4 +1,5 @@
 import toast from "react-hot-toast";
+import s from "./SearchBar.module.css";
 const SearchBar = ({ onSubmit, query, onChangeQuery }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -10,9 +11,11 @@ const SearchBar = ({ onSubmit, query, onChangeQuery }) => {
   };
   return (
     <div>
-      <header>
-        <form onSubmit={handleFormSubmit}>
+      <header className={s.header}>
+        <form className={s.searchForm} onSubmit={handleFormSubmit}>
+          <span className="s.search-button">🔍</span>
           <input
+            className={s.searchInput}
             type="text"
             value={query}
             onChange={(e) => onChangeQuery(e.target.value)}
@@ -20,7 +23,9 @@ const SearchBar = ({ onSubmit, query, onChangeQuery }) => {
             autoFocus
             placeholder="Search images and photos"
           />
-          <button type="submit">Search</button>
+          <button className={s.searchButton} type="submit">
+            Search
+          </button>
         </form>
       </header>
     </div>
